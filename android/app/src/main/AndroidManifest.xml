@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="rate_checker_flutter"
+        android:label="RateChecker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
