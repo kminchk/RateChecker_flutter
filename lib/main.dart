@@ -5,8 +5,16 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'theme_notifier.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    print("Error loading .env file: $e");
+  }
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeNotifier(),
@@ -90,8 +98,9 @@ class _RateCheckerScreenState extends State<RateCheckerScreen> {
   ];
 
   Future<void> fetchRate() async {
+    final apiKey = dotenv.env['EXCHANGE_API_KEY'];
     final url = Uri.parse(
-      'https://v6.exchangerate-api.com/v6/311bc966946f991f1030f191/latest/$fromCurrency',
+      'https://v6.exchangerate-api.com/v6/$apiKey/latest/$fromCurrency',
     );
 
     final response = await http.get(url);
